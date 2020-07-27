@@ -112,3 +112,6 @@ class Tensor(object):
     def __getitem__(self, item) -> 'Tensor':
         return tensor_slice(self, item)
 
+    @property
+    def T(self) -> 'Tensor':
+        return tensor_transpose(self)

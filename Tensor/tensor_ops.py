@@ -155,8 +155,22 @@ def tensor_slice(t: Tensor, idxs) -> Tensor:
             bigger_grad[idxs] = grad
             return bigger_grad
 
-        depends_on = Dependency(t, grad_fn)
+        depends_on = [Dependency(t, grad_fn)]
     else:
         depends_on = []
 
     return Tensor(data, requires_grad, depends_on)
+
+def tensor_transpose(t: Tensor) -> Tensor:
+    data = t.data.T
+    required_grad = t.requires_grad
+
+    if required_grad:
+        def grad_fn(grad: np.ndarray) -> np.ndarray:
+            return grad.T
+
+        depends_on = [Dependency(t, grad_fn)]
+    else:
+        depends_on = []
+
+    return Tensor(data, required_grad, depends_on)
