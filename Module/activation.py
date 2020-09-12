@@ -6,6 +6,7 @@ from Module.layer import Layer
 
 Activation_Function = Callable[[Tensor], Tensor]
 
+
 class Activation(Layer):
 
     def __init__(self,
